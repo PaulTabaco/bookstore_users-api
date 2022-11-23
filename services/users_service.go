@@ -2,8 +2,10 @@ package services
 
 import (
 	"github.com/PaulTabaco/bookstore_users-api/domain/users"
+	"github.com/PaulTabaco/bookstore_users-api/utils/errors"
 )
 
-func CreateUser(user users.User) (*users.User, error) {
+func CreateUser(user users.User) (*users.User, *errors.RestErr) {
+
 	return &user, nil
 }
