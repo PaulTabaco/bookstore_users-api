@@ -16,10 +16,6 @@ const (
 	queryGetUser     = "SELECT id, first_name, last_name, email, date_created FROM users WHERE id=? ;"
 )
 
-var (
-	usersDB = make(map[int64]*User)
-)
-
 func (user *User) Get() *errors.RestErr {
 	stmt, err := users_db.Client.Prepare(queryGetUser)
 	if err != nil {
@@ -32,10 +28,8 @@ func (user *User) Get() *errors.RestErr {
 	if err = result.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.DateCreated); err != nil {
 		// Handling not fond user with given id
 		if strings.Contains(err.Error(), errorNoRows) {
-			errors.NewNotFoundError(fmt.Sprintf("user with id %d does not exists", user.Id))
+			return errors.NewNotFoundError(fmt.Sprintf("user with id %d does not exists", user.Id))
 		}
-		fmt.Println(err)
-
 		return errors.NewInternalServerError(fmt.Sprintf("error when get user with id %d , - %s", user.Id, err.Error()))
 	}
 
