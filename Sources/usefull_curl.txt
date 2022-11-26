@@ -2,9 +2,9 @@
 
 ** CREATE USER
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
--d '{"id": 20, "first_name": "Marina", "last_name": "Usova","email":"some@email.com"}' \
+-d '{"first_name": "Marina", "last_name": "Usova", "email":"some@email.com"}' \
 http://localhost:8080/users
 
 ** GET USER
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
-http://localhost:8080/users/123
+http://localhost:8080/users/1
