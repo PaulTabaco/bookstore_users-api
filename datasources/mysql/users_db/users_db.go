@@ -2,9 +2,11 @@ package users_db
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
-	// _ "github.com/go-sql-driver/mysql"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
@@ -24,16 +26,17 @@ var (
 )
 
 func init() {
-	// datasourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8", username, password, host, schema)
-	// // datasourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8", "root", "codecamp", "127.0.0.1:3306", "users_db")
-	// Client, err := sql.Open("mysql", datasourceName)
+	datasourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8", username, password, host, schema)
+	// datasourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8", "root", "codecamp", "127.0.0.1:3306", "users_db")
+	var err error
+	Client, err = sql.Open("mysql", datasourceName)
 
-	// if err != nil {
-	// 	panic(err)
-	// }
+	if err != nil {
+		panic(err)
+	}
 
-	// if err = Client.Ping(); err != nil {
-	// 	panic(err)
-	// }
+	if err = Client.Ping(); err != nil {
+		panic(err)
+	}
 	log.Println("database successfully configured")
 }
