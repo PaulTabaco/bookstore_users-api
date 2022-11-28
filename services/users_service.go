@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/PaulTabaco/bookstore_users-api/domain/users"
+	"github.com/PaulTabaco/bookstore_users-api/utils/date_utils"
 	"github.com/PaulTabaco/bookstore_users-api/utils/errors"
 )
 
@@ -20,6 +21,8 @@ func CreateUser(user users.User) (*users.User, *errors.RestErr) {
 		return nil, err
 	}
 
+	user.Status = users.StatusActive
+	user.DateCreated = date_utils.GetNowDBFormat()
 	if err := user.Save(); err != nil {
 		return nil, err
 	}
