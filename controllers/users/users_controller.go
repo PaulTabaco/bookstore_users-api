@@ -10,7 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateUser(c *gin.Context) {
+func getUserId(userIdParam string) (int64, *errors.RestErr) {
+	userId, userIdErr := strconv.ParseInt(userIdParam, 10, 64)
+	if userIdErr != nil {
+		return 0, errors.NewBadRequestError("invalide user id")
+	}
+	return userId, nil
+
+}
+
+func Create(c *gin.Context) {
 	var user users.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -28,11 +37,10 @@ func CreateUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, result)
 }
 
-func GetUser(c *gin.Context) {
-	userId, userIdErr := strconv.ParseInt(c.Param("user_id"), 10, 64)
-	if userIdErr != nil {
-		err := errors.NewBadRequestError("invalide user id")
-		c.JSON(err.Status, err)
+func Get(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
 		return
 	}
 
@@ -45,16 +53,14 @@ func GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-func UpdateUser(c *gin.Context) {
-	userId, userIdErr := strconv.ParseInt(c.Param("user_id"), 10, 64)
-	if userIdErr != nil {
-		err := errors.NewBadRequestError("invalide user id")
-		c.JSON(err.Status, err)
+func Update(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
 		return
 	}
 
 	var user users.User
-
 	if err := c.ShouldBindJSON(&user); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body")
 		c.JSON(restErr.Status, &restErr)
@@ -74,6 +80,21 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func SearchUser(c *gin.Context) {
+func Delete(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
+		return
+	}
+
+	if err := services.DeleteUser(userId); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]string{"status": "deleted"})
+}
+
+func Search(c *gin.Context) {
 	c.String(http.StatusNotImplemented, "implementing of SearchUser coming soon")
 }
