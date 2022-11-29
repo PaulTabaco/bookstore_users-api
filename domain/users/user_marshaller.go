@@ -22,6 +22,15 @@ type PrivateUser struct {
 	// Password    string `json:"password"` //`json:"-"`
 }
 
+// Marshing for special type - User = []User
+func (users Users) Marshall(isPublic bool) []interface{} {
+	result := make([]interface{}, len(users))
+	for index, user := range users {
+		result[index] = user.Marshall(isPublic)
+	}
+	return result
+}
+
 // if json tag fields have same names - approach like this
 func (user *User) Marshall(isPublic bool) interface{} {
 	userJson, _ := json.Marshal(user)
