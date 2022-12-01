@@ -1,8 +1,13 @@
 package errors
 
 import (
+	"errors"
 	"net/http"
 )
+
+func NewError(msg string) error {
+	return errors.New(msg)
+}
 
 type RestErr struct {
 	Message string `json:"message"`
