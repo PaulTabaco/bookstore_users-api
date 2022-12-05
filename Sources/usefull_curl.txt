@@ -12,3 +12,8 @@ http://localhost:8080/users/1
 
 ** SEARCH USER BY STATUS
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" -X GET http://localhost:8080/users/search?status=
+
+** LOGIN
+curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
+-d '{"email": "some@email.com", "password": "123"}' \
+http://localhost:8080/users/LOGIN
