@@ -44,6 +44,17 @@ func Get(c *gin.Context) {
 		return
 	}
 
+	// Prevent access resources with not existed in db token;
+	// It's not optimal way for me to look for callerId ==0 in this case, but used in tutorial  callerId 0 returns if token not exists);
+	if callerId := oauth.GetCallerId(c.Request); callerId == 0 {
+		err := errors.RestErr{
+			Status:  http.StatusUnauthorized,
+			Message: "resource is not available",
+		}
+		c.JSON(err.Status, err)
+		return
+	}
+
 	userId, idErr := getUserId(c.Param("user_id"))
 	if idErr != nil {
 		c.JSON(idErr.Status, idErr)
