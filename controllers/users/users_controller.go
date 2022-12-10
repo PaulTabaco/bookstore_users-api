@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/PaulTabaco/bookstore_oauth/oauth"
 	"github.com/PaulTabaco/bookstore_users-api/domain/users"
 	"github.com/PaulTabaco/bookstore_users-api/services"
 	"github.com/PaulTabaco/bookstore_users-api/utils/errors"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +18,6 @@ func getUserId(userIdParam string) (int64, *errors.RestErr) {
 		return 0, errors.NewBadRequestError("invalide user id")
 	}
 	return userId, nil
-
 }
 
 func Create(c *gin.Context) {
@@ -38,6 +39,11 @@ func Create(c *gin.Context) {
 }
 
 func Get(c *gin.Context) {
+	if err := oauth.AuthenticateRequest(c.Request); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
 	userId, idErr := getUserId(c.Param("user_id"))
 	if idErr != nil {
 		c.JSON(idErr.Status, idErr)
@@ -50,6 +56,13 @@ func Get(c *gin.Context) {
 		return
 	}
 
+	// if callerId == result user.id - Marshal to return internal user
+	if oauth.GetCallerId(c.Request) == user.Id {
+		c.JSON(http.StatusOK, user.Marshall(false))
+		return
+	}
+
+	// Othervice marshal to return int or public user depending of X-Public header
 	c.JSON(http.StatusOK, user.Marshall(c.GetHeader("X-Public") == "true"))
 }
 

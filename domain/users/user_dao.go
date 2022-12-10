@@ -140,7 +140,7 @@ func (user *User) FindByEmailAndPassword() *errors.RestErr {
 
 	if getErr := result.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.DateCreated, &user.Status); getErr != nil {
 		if strings.Contains(getErr.Error(), mysql_utils.ErrorNoRows) {
-			return errors.NewNotFoundError("invalid user credentionals")
+			return errors.NewNotFoundError("invalid user credentinals")
 		}
 		logger.Error("error when trying to get user by email and password", getErr)
 		return errors.NewInternalServerError("database error")
