@@ -1,9 +1,10 @@
 package mysql_utils
 
 import (
+	"errors"
 	"strings"
 
-	"github.com/PaulTabaco/bookstore_users-api/utils/errors"
+	"github.com/PaulTabaco/bookstore_utils/rest_errors"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -11,26 +12,26 @@ const (
 	ErrorNoRows = "no rows in result set"
 )
 
-func ParseError(err error) *errors.RestErr {
+func ParseError(err error) *rest_errors.RestErr {
 	if err == nil {
-		return errors.NewInternalServerError("error processing request")
+		return rest_errors.NewInternalServerError("error processing request", errors.New(""))
 	}
 	sqlErr, ok := err.(*mysql.MySQLError)
 	// if is not mysql db error
 	if !ok {
 		// ID not exist case:
 		if strings.Contains(err.Error(), ErrorNoRows) {
-			return errors.NewNotFoundError("no error matching given id")
+			return rest_errors.NewNotFoundError("no error matching given id", errors.New(""))
 		}
 		// other non mysql errors:
-		return errors.NewInternalServerError("error parsing database response")
+		return rest_errors.NewInternalServerError("error parsing database response", err)
 	}
 	// if kind of mysql error
 	switch sqlErr.Number {
 	// Email already exists
 	case 1062:
-		return errors.NewBadRequestError("invalid data")
+		return rest_errors.NewBadRequestError("invalid data", errors.New(""))
 	}
 	// other of mysql errors
-	return errors.NewInternalServerError("error processing request")
+	return rest_errors.NewInternalServerError("error processing request", errors.New("database error"))
 }

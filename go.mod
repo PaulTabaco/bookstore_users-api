@@ -10,6 +10,7 @@ require (
 
 require (
 	github.com/PaulTabaco/bookstore_oauth v0.0.0-20221210173412-9d08dff99a1e // indirect
+	github.com/PaulTabaco/bookstore_utils v0.0.0-20221212224443-19484854a26a // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

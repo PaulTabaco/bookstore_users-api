@@ -2,6 +2,8 @@ github.com/PaulTabaco/bookstore_oauth v0.0.0-20221210145507-0a4a734896d0 h1:F4r+
 github.com/PaulTabaco/bookstore_oauth v0.0.0-20221210145507-0a4a734896d0/go.mod h1:f6Iou3uqLdePyj+NldzXeI/9qi6PuLkTngPHkcZ9R78=
 github.com/PaulTabaco/bookstore_oauth v0.0.0-20221210173412-9d08dff99a1e h1:Ch4dbELSu3nLE3rRFqsCy1mG1yPcg1vKfJKH0qAfCrg=
 github.com/PaulTabaco/bookstore_oauth v0.0.0-20221210173412-9d08dff99a1e/go.mod h1:x2pLp32m+D0QSjPBA0IBeoi9CHGryneFXLk5IST3wDs=
+github.com/PaulTabaco/bookstore_utils v0.0.0-20221212224443-19484854a26a h1:B2ZUQ63Vodw1uMODOEL5KlVN75o8HSkK9VJYgI/whBw=
+github.com/PaulTabaco/bookstore_utils v0.0.0-20221212224443-19484854a26a/go.mod h1:b2zJtDL3fyx8bvDoSp134dRiIsrfMSUOWNezuukw0ZE=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
