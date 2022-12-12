@@ -2,23 +2,23 @@
 
 ** CREATE USER
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
--d '{"first_name": "Marina", "last_name": "Usova", "email":"some@email.com", "status": "active", "password": ""}' \
+-d '{"first_name": "Marina", "last_name": "Usova", "email":"some@email.com", "password": "123"}' \
 http://localhost:8081/users
 
-** GET USER (PRIVATE request - without x-public header)
+** GET USER with access_token (PRIVATE request - without x-public header)
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
-http://localhost:8081/users/1
+http://localhost:8081/users/2?access_token=abc123
 
-** GET USER (PUBLIC request - x-public header is true)
+** GET USER with access_token (PUBLIC request - x-public header is true)
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
  -H "x-public: true" \
-http://localhost:8081/users/1
+http://localhost:8081/users/1?access_token=abc123
 
 
 ** SEARCH USER BY STATUS
-curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" -X GET http://localhost:8080/users/search?status=
+curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" http://localhost:8081/users/search?status=active
 
 ** LOGIN
 curl -k -v -H 'Content-type: application/json' -H "Accept: application/json" \
 -d '{"email": "some@email.com", "password": "123"}' \
-http://localhost:8081/users/LOGIN
+http://localhost:8081/users/login
