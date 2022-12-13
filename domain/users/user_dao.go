@@ -123,7 +123,7 @@ func (user *User) FindByStatus(status string) ([]User, *rest_errors.RestErr) {
 	}
 
 	if len(results) == 0 {
-		return nil, rest_errors.NewNotFoundError(fmt.Sprintf("no users matching status %s", status), errors.New(""))
+		return nil, rest_errors.NewNotFoundError("", fmt.Errorf("no users matching status %s", status))
 	}
 
 	return results, nil
@@ -141,7 +141,7 @@ func (user *User) FindByEmailAndPassword() *rest_errors.RestErr {
 
 	if getErr := result.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.DateCreated, &user.Status); getErr != nil {
 		if strings.Contains(getErr.Error(), mysql_utils.ErrorNoRows) {
-			return rest_errors.NewNotFoundError("invalid user credentinals", errors.New(""))
+			return rest_errors.NewNotFoundError("", errors.New("invalid user credentinals"))
 		}
 		logger.Error("error when trying to get user by email and password", getErr)
 		return rest_errors.NewInternalServerError("error when trying to get user by email and password", errors.New("database error"))

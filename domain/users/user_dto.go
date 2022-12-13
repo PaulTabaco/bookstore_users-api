@@ -30,12 +30,12 @@ func (user *User) Validate() *rest_errors.RestErr {
 
 	user.Email = strings.TrimSpace(strings.ToLower(user.Email))
 	if user.Email == "" {
-		return rest_errors.NewBadRequestError("invalid email address", errors.New(""))
+		return rest_errors.NewBadRequestError("", errors.New("invalid email address"))
 	}
 
 	user.Password = strings.TrimSpace(strings.ToLower(user.Password))
 	if user.Password == "" {
-		return rest_errors.NewBadRequestError("invalid password", errors.New(""))
+		return rest_errors.NewBadRequestError("", errors.New("invalid password"))
 	}
 	return nil
 }
