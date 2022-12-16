@@ -3,8 +3,8 @@ module github.com/PaulTabaco/bookstore_users-api
 go 1.19
 
 require (
-	github.com/PaulTabaco/bookstore_oauth v0.0.0-20221213140644-b465c0adf12c
-	github.com/PaulTabaco/bookstore_utils v0.0.0-20221212224443-19484854a26a
+	github.com/PaulTabaco/bookstore_oauth v0.0.0-20221216155034-d5bcb1d6f7aa
+	github.com/PaulTabaco/bookstore_utils v0.0.0-20221216140554-1772c03f800c
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.7.0
 	go.uber.org/zap v1.24.0
